@@ -52,6 +52,11 @@ Audit your remote to tune hardness ```./tide.sh -e audit```
 
 Access your production system (e.g., docker compose logs, debugging and fixing your deployment pipeline) with ```$./tide.sh -e .env.prod ssh```
 
+# dependencies
+
+- POSIX/WSL2 (a pc with bash, ssh, etc.)
+- doctl from DigitalOcean.com [https://docs.digitalocean.com/reference/doctl/](https://docs.digitalocean.com/reference/doctl/)
+
 # can I contribute?
 
 Please do! More work is needed. There are currently no guidelines on contributions, all are welcomed.
