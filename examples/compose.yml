@@ -1,0 +1,90 @@
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - internal_private
+
+  webapp:
+    build: ./path-to-django-project
+    image: hpwbana/webapp
+    volumes:
+      - ./path-to-django-project/app1:/app/app1
+      - webapp-secrets:/app/secrets:rw
+      - django-media-data:/app/django_media:rw
+      - django-static-data:/app/django_static:rw
+      - django-logs:/app/app1/logs:rw
+      - nginx-webapp-socket:/run/wsgi:rw
+    working_dir: /app/app1
+    environment:
+      - TIDE_PUBLIC_IP
+      - SECRETS_DIR
+      - NGINX_DOMAIN_FULL_NAME
+      - NGINX_DOMAIN_TLD_NAME
+      - CSRF_TRUSTED_ORIGINS
+      - DEFAULT_SITE_DOMAIN
+      - DEFAULT_SITE_EMAIL
+      - DJANGO_DATABASE_URI
+      - DJANGO_MEDIA_URL
+      - DJANGO_MEDIA_ROOT=/app/django_media
+      - DJANGO_STATIC_ROOT=/app/django_static
+      - DJANGO_STATIC_URL
+      - DJANGO_APP_PORT
+      - DEFAULT_ADMIN_EMAIL
+      - DEFAULT_ADMIN_PW
+      - DATABASE_URL
+    depends_on:
+      - postgres
+      - nginx
+    restart: always
+    networks:
+      - internal_private
+    command: ["waitress-serve", "--unix-socket=/run/wsgi/nginx-webapp.sock", "--unix-socket-perms=007", "my-django-project.wsgi:application"]
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    volumes:
+      - letsencrypt:/etc/letsencrypt/
+      - certbot-challenges:/var/www/certbot:rw
+      - django-media-data:/var/www/django_media:rw
+      - django-static-data:/var/www/django_static:rw
+      - nginx-webapp-socket:/run/wsgi:rw
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NGINX_DOMAIN_TLD_NAME
+      - NGINX_DOMAIN_FULL_NAME
+      - NGINX_PROXY_PASS_URI
+      - DJANGO_MEDIA_URL
+      - DJANGO_MEDIA_ROOT
+      - DJANGO_STATIC_URL
+      - DJANGO_STATIC_ROOT
+      - NGINX_LE_EMAIL=${DEFAULT_FROM_EMAIL}
+      - LE_GENERATE_STAGING_CERT # don't forget to set to '' if real cert is to be used and 'true' if test cert.
+    restart: always
+    networks:
+      - publicly_accessible
+      - internal_private
+
+volumes:
+  letsencrypt: # see nginx volume mount for notes. todo.
+  webapp-secrets:
+  certbot-challenges:
+  postgres-data:
+  django-media-data:
+  django-static-data:
+  django-logs:
+  nginx-webapp-socket:
+
+networks:
+  internal_private:
+  publicly_accessible:
+    driver: bridge
