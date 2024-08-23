@@ -12,7 +12,7 @@ services:
 
   webapp:
     build: ./path-to-django-project
-    image: hpwbana/webapp
+    image: my-ns/my-project
     volumes:
       - ./path-to-django-project/app1:/app/app1
       - webapp-secrets:/app/secrets:rw
