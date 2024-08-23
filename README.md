@@ -31,7 +31,7 @@ tide.sh was built to ship docker compose-based sites to production while keeping
 4. Create keys for github (access: your repo for clone/fetch) and digitalocean.com (access: ssh key & droplet actions)
 5. Commit git repo to github
 6. Complete your .env.prod. Get your domain created if you have one. Decide whether you want test certs or not.
-N. _Deploy with tide.sh_ (See below for automation provided by tide.sh)
+7. __Deploy with tide.sh__ (See below for automation provided by tide.sh)
 
 note: if you develop on windows (e.g., vscode with powershell term), you will want to enter bash in that terminal session within vscode in order to properly run ./tide.sh.
 
