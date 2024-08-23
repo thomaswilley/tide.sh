@@ -3,13 +3,13 @@ __ship docker/compose apps to production on digital ocean__
 
 tide.sh aims to make dockerized applications easy to deploy to a single remote on digitalocean.
 
-Deploy the first time ```$ ./tide.sh -e .env.prod deploy``` which automatically:
+Deploy the first time with ```$ ./tide.sh -e .env.prod deploy``` will will automatically:
 
-- Registers your ssh key
-- Creates a droplet
-- Clones your repo
-- Sets up the environment
-- Cleans up and establishes ability to re-deploy, start-app, and more.
+- Register your ssh key
+- Create a dedicated droplet
+- Clone your repo
+- Setup the environment and install dependencies
+- Clean-up and hook the ability to re-deploy, start-app, and more.
 
 See the ```./examples``` folder of this repo for sample files including:
 
