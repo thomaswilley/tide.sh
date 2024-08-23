@@ -1,7 +1,9 @@
 # tide.sh
-tide.sh: ship docker/compose apps to production on digital ocean
+__ship docker/compose apps to production on digital ocean__
 
-This is beta software currently. Tt does work and there are production deployments using it.
+tide.sh aims to make dockerized applications easy to deploy to a single remote on digitalocean.
+
+While tide.sh works and there are production deployments using it, it should be considered pre-release.
 
 # why tide.sh exists
 
