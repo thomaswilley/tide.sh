@@ -3,6 +3,11 @@ __ship docker/compose apps to production on digital ocean__
 
 tide.sh aims to make dockerized applications easy to deploy to a single remote on digitalocean.
 
+See the ```./examples``` folder of this repo for sample files including:
+
+- compose.yml and .env.prod for a __production django__ application (django, nginx, postgres)
+- __nginx reverse proxy__ container configuration that includes __letsencrypt SSL with autorenewals__ used in this application
+
 While tide.sh works and there are production deployments using it, it should be considered pre-release.
 
 # why tide.sh exists
@@ -21,11 +26,6 @@ tide.sh was built to ship docker compose-based sites to production while keeping
 N. _Deploy with tide.sh_ (See below for automation provided by tide.sh)
 
 note: if you develop on windows (e.g., vscode with powershell term), you will want to enter bash in that terminal session within vscode in order to properly run ./tide.sh.
-
-See the ./examples folder of this repo for sample files including:
-
-- compose.yml and .env.prod for a production django application (django, nginx, postgres)
-- nginx reverse proxy container configuration that includes letsencrypt SSL with autorenewals used in this application
 
 # what does tide.sh automate
 
